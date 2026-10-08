@@ -11,8 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://unpkg.com/leaflet-geosearch@latest/dist/bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/polylabel/2.1.0/polylabel.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-polylabel@2.0.2/dist/L.polylabel.min.js"></script>
+
     <style>
       html, body {
         width: 100%;
@@ -567,7 +567,7 @@
           const tcenter = turf.pointOnFeature(polyGeoJson).geometry.coordinates;
           const tmass = turf.centerOfMass(polyGeoJson).geometry.coordinates;
           const coords = feature.geometry.coordinates;
-          const poleOfInaccessibility = polylabel(coords, 1.0);
+          const poleOfInaccessibility = polylabel(coords, 0.00001);
           console.log('Center coordinates for ' + feature.properties['DIVISION'] + ' - ' + feature.properties['DISTRICT'] + ': ' + center);
           console.log('Turf coordinates: ' + tcenter);
           console.log('Turf center of mass: ' + tmass);
