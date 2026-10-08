@@ -560,7 +560,7 @@
             //className: 'polygon-label'
           //});
           //console.log(layer.getTooltip());
-          const b = map.getBounds();
+          //const b = map.getBounds();
           const polyGeoJson = layer.toGeoJSON();
           const center = layer.getBounds().getCenter();
           const tcenter = turf.pointOnFeature(polyGeoJson).geometry.coordinates;
