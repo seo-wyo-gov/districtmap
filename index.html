@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://unpkg.com/leaflet-geosearch@latest/dist/bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/polylabel/2.1.0/polylabel.js"></script>
 
     <style>
       html, body {
@@ -565,10 +566,12 @@
           const center = layer.getBounds().getCenter();
           const tcenter = turf.pointOnFeature(polyGeoJson).geometry.coordinates;
           const tmass = turf.centerOfMass(polyGeoJson).geometry.coordinates;
+          const coords = feature.geometry.coordinates;
+          const poleOfInaccessibility = polylabel(coords, 1);
           console.log('Center coordinates for ' + feature.properties['DIVISION'] + ' - ' + feature.properties['DISTRICT'] + ': ' + center);
           console.log('Turf coordinates: ' + tcenter);
           console.log('Turf center of mass: ' + tmass);
-          const tooltip = L.tooltip({permanent: true, className: 'polygon-label'}).setLatLng([tcenter[1], tcenter[0]]).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
+          const tooltip = L.tooltip({permanent: true, className: 'polygon-label'}).setLatLng([poleOfInaccessibility[1], poleOfInaccessibility[0]]).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
           const labelMarker = L.marker(center, {
             icon: L.divIcon({
               className: 'polygon-label',
