@@ -317,7 +317,7 @@
           const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
           const button = L.DomUtil.create('a', '', container);
           
-          button.innerHTML = '<i style="font-size:24px;padding-left:4px;padding-top:2px;" class="bi bi-crosshair"></i>'; // Use any text, icon, or SVG
+          button.innerHTML = '<i style="font-size:24px;padding-left:6px;padding-top:2px;" class="bi bi-crosshair"></i>'; // Use any text, icon, or SVG
           button.style.backgroundColor = 'white';
           button.style.width = '30px';
           button.style.height = '30px';
@@ -560,6 +560,7 @@
             //className: 'polygon-label'
           //});
           //console.log(layer.getTooltip());
+          const b = map.getBounds();
           const polyGeoJson = layer.toGeoJSON();
           const center = layer.getBounds().getCenter();
           const tcenter = turf.pointOnFeature(polyGeoJson).geometry.coordinates;
@@ -567,7 +568,7 @@
           console.log('Center coordinates for ' + feature.properties['DIVISION'] + ' - ' + feature.properties['DISTRICT'] + ': ' + center);
           console.log('Turf coordinates: ' + tcenter);
           console.log('Turf center of mass: ' + tmass);
-          const tooltip = L.tooltip({permanent: true, className: 'polygon-label'}).setLatLng([tcenter[1], tcenter[0]]).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
+          const tooltip = L.tooltip({permanent: true, className: 'polygon-label'}).setLatLng([tmass[1], tmass[0]]).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
           //const labelMarker = L.marker(center, {
             //icon: L.divIcon({
               //className: 'polygon-label',
