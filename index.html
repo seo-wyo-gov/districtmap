@@ -569,12 +569,12 @@
           console.log('Turf coordinates: ' + tcenter);
           console.log('Turf center of mass: ' + tmass);
           const tooltip = L.tooltip({permanent: true, className: 'polygon-label'}).setLatLng([tcenter[1], tcenter[0]]).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
-          //const labelMarker = L.marker(center, {
-            //icon: L.divIcon({
-              //className: 'polygon-label',
-              //html: "<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>"
-            //})
-          //}).addTo(map);
+          const labelMarker = L.marker(center, {
+            icon: L.divIcon({
+              className: 'polygon-label',
+              html: "<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>"
+            })
+          }).addTo(map);
           layer.on({
             click: function(e) {
               // 1. Prevent map click events from triggering
