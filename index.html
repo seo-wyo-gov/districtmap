@@ -708,7 +708,7 @@
       map.on('zoomend', function() {
         const mapBounds = map.getBounds();
 
-        geoJsonLayer.eachLayer(function(layer) {
+        geoJsonLayer.eachLayer(function(feature, layer) {
           const isVisible = mapBounds.intersects(layer.getBounds());
 
           if (isVisible) {
