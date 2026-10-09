@@ -556,11 +556,8 @@
         },
         onEachFeature: function(feature, layer) {
           layer.bindTooltip("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>", {
-            //permanent: true,
-            permanent: false,
-            sticky: true,
-            //direction: 'center',
-            direction: 'top',
+            permanent: true,
+            direction: 'center',
             className: 'polygon-label'
           });
           //console.log(layer.getTooltip());
@@ -575,7 +572,7 @@
           //console.log('Center coordinates for ' + feature.properties['DIVISION'] + ' - ' + feature.properties['DISTRICT'] + ': ' + center);
           //console.log('Turf coordinates: ' + tcenter);
           //console.log('Turf center of mass: ' + tmass);
-          const tooltip = L.tooltip({permanent: true, className: 'polygon-label'}).setLatLng([tcentroid[1], tcentroid[0]]).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
+          //const tooltip = L.tooltip({permanent: true, className: 'polygon-label'}).setLatLng([tcentroid[1], tcentroid[0]]).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
           //const stickytooltip = L.tooltip({permanent: false, direction: 'auto', sticky: true, className: 'polygon-label'}).setLatLng([poleOfInaccessibility[1], poleOfInaccessibility[0]]).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
           //const labelMarker = L.marker(center, {
             //icon: L.divIcon({
@@ -706,6 +703,26 @@
             }
           });
         }
+      });
+
+      map.on('zoomend', function() {
+        const mapBounds = map.getBounds();
+
+        geoJsonLayer.eachLayer(function(layer) {
+          const isVisible = mapBounds.intersects(layer.getBounds());
+
+          if (isVisible) {
+            layer.unbindTooltip();
+
+            layer.bindTooltip("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>", {
+              permanent: true,
+              direction: 'center',
+              className: 'polygon-label'
+            });
+          } else {
+            layer.unbindTooltip();
+          }
+        });
       });
     </script>
   </body>
