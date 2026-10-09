@@ -711,7 +711,8 @@
         geoJsonLayer.eachLayer(function(layer) {
           const isVisible = mapBounds.intersects(layer.getBounds());
           const feature = layer.feature;
-          console.log('Div ' + feature.properties["DIVISION"] + ' Dist ' + feature.properties["DISTRICT"] + isVisible ? ' is visible' : ' not visible');
+          const str = isVisible ? ' is visible' : ' not visible';
+          console.log('Div ' + feature.properties["DIVISION"] + ' Dist ' + feature.properties["DISTRICT"] + str);
           if (isVisible) {
             layer.unbindTooltip();
 
