@@ -572,7 +572,7 @@
           //console.log('Turf coordinates: ' + tcenter);
           //console.log('Turf center of mass: ' + tmass);
           //const tooltip = L.tooltip({permanent: true, className: 'polygon-label'}).setLatLng([poleOfInaccessibility[1], poleOfInaccessibility[0]]).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
-          const stickytooltip = L.tooltip({permanent: false, sticky: true, className: 'polygon-label'}).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
+          const stickytooltip = L.tooltip({permanent: false, direction: center, sticky: true, className: 'polygon-label'}).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
           //const labelMarker = L.marker(center, {
             //icon: L.divIcon({
               //className: 'polygon-label',
