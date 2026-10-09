@@ -708,7 +708,7 @@
       function updateVisibleTooltips() {
         const mapBounds = map.getBounds();
 
-        polyGeoJson.eachLayer((layer) => {
+        geoJsonLayer.eachLayer((layer) => {
             // 1. Always unbind the previous tooltip to reset positioning
             if (layer.getTooltip()) {
                 layer.unbindTooltip();
