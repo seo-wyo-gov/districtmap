@@ -705,27 +705,48 @@
         }
       });
 
-      map.on('zoomend', function() {
+      function updateVisibleTooltips() {
         const mapBounds = map.getBounds();
-        console.log('map zoomed');
-        geoJsonLayer.eachLayer(function(layer) {
-          const isVisible = mapBounds.intersects(layer.getBounds());
-          const feature = layer.feature;
-          const str = isVisible ? ' is visible' : ' not visible';
-          console.log('Div ' + feature.properties["DIVISION"] + ' Dist ' + feature.properties["DISTRICT"] + str);
-          if (isVisible) {
-            layer.unbindTooltip();
 
-            layer.bindTooltip("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>", {
-              permanent: true,
-              direction: 'center',
-              className: 'polygon-label'
-            });
-          } else {
-            layer.unbindTooltip();
-          }
+        polygonGroup.eachLayer((layer) => {
+            // 1. Always unbind the previous tooltip to reset positioning
+            if (layer.getTooltip()) {
+                layer.unbindTooltip();
+            }
+
+            const polyBounds = layer.getBounds();
+
+            // 2. Check if the polygon overlaps with the current screen view
+            if (mapBounds.intersects(polyBounds)) {
+                
+                // 3. Find the overlapping bounding box (the visible portion)
+                const intersectSouthWest = L.latLng(
+                    Math.max(mapBounds.getSouth(), polyBounds.getSouth()),
+                    Math.max(mapBounds.getWest(), polyBounds.getWest())
+                );
+                const intersectNorthEast = L.latLng(
+                    Math.min(mapBounds.getNorth(), polyBounds.getNorth()),
+                    Math.min(mapBounds.getEast(), polyBounds.getEast())
+                );
+                
+                const visibleBounds = L.latLngBounds(intersectSouthWest, intersectNorthEast);
+                const visibleCenter = visibleBounds.getCenter();
+
+                // 4. Bind the tooltip and explicitly force its position to the visible center
+                layer.bindTooltip(layer.customTooltipText, {
+                    permanent: true,
+                    direction: 'center',
+                    className: 'dynamic-center-tooltip' 
+                });
+                
+                // Set the fallback/override coordinates for the tooltip open position
+                layer.getTooltip().setLatLng(visibleCenter);
+                layer.openTooltip(visibleCenter);
+            }
         });
-      });
+      }
+
+      map.on('zoomend moveend', updateVisibleTooltips);
     </script>
   </body>
 </html>
