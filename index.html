@@ -555,11 +555,11 @@
           className: 'district-polygon'
         },
         onEachFeature: function(feature, layer) {
-          //layer.bindTooltip("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>", {
-            //permanent: true,
-            //direction: 'center',
-            //className: 'polygon-label'
-          //});
+          layer.bindTooltip("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>", {
+            permanent: true,
+            direction: 'center',
+            className: 'polygon-label'
+          });
           //console.log(layer.getTooltip());
           //const b = map.getBounds();
           const polyGeoJson = layer.toGeoJSON();
