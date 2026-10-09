@@ -569,12 +569,13 @@
           const center = layer.getBounds().getCenter();
           const tcenter = turf.pointOnFeature(polyGeoJson).geometry.coordinates;
           const tmass = turf.centerOfMass(polyGeoJson).geometry.coordinates;
+          const tcentroid = turf.centroid(polyGeoJson).geometry.coordinates;
           const coords = feature.geometry.coordinates;
           const poleOfInaccessibility = polylabel(coords, 0.000001);
           //console.log('Center coordinates for ' + feature.properties['DIVISION'] + ' - ' + feature.properties['DISTRICT'] + ': ' + center);
           //console.log('Turf coordinates: ' + tcenter);
           //console.log('Turf center of mass: ' + tmass);
-          const tooltip = L.tooltip({permanent: true, className: 'polygon-label'}).setLatLng(center).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
+          const tooltip = L.tooltip({permanent: true, className: 'polygon-label'}).setLatLng([tcentroid[1], tcentroid[0]]).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
           //const stickytooltip = L.tooltip({permanent: false, direction: 'auto', sticky: true, className: 'polygon-label'}).setLatLng([poleOfInaccessibility[1], poleOfInaccessibility[0]]).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
           //const labelMarker = L.marker(center, {
             //icon: L.divIcon({
