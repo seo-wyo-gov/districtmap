@@ -556,8 +556,11 @@
         },
         onEachFeature: function(feature, layer) {
           layer.bindTooltip("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>", {
-            permanent: true,
-            direction: 'center',
+            //permanent: true,
+            permanent: false,
+            sticky: true,
+            //direction: 'center',
+            direction: 'top',
             className: 'polygon-label'
           });
           //console.log(layer.getTooltip());
