@@ -731,12 +731,13 @@
                 
                 const visibleBounds = L.latLngBounds(intersectSouthWest, intersectNorthEast);
                 const visibleCenter = visibleBounds.getCenter();
+                const feature = layer.feature;
 
                 // 4. Bind the tooltip and explicitly force its position to the visible center
-                layer.bindTooltip(layer.customTooltipText, {
-                    permanent: true,
-                    direction: 'center',
-                    className: 'dynamic-center-tooltip' 
+                layer.bindTooltip("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>", {
+                  permanent: true,
+                  direction: 'center',
+                  className: 'polygon-label'
                 });
                 
                 // Set the fallback/override coordinates for the tooltip open position
