@@ -708,8 +708,9 @@
       map.on('zoomend', function() {
         const mapBounds = map.getBounds();
 
-        geoJsonLayer.eachLayer(function(feature, layer) {
+        geoJsonLayer.eachLayer(function(layer) {
           const isVisible = mapBounds.intersects(layer.getBounds());
+          const feature = layer.feature;
 
           if (isVisible) {
             layer.unbindTooltip();
