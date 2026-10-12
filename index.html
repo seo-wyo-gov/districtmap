@@ -712,7 +712,8 @@
         ]);
 
         geoJsonLayer.eachLayer((layer) => {
-          const visibleIntersection = turf.intersect(layer, viewportPoly);
+          const polygonGeoJson = layer.toGeoJSON();
+          const visibleIntersection = turf.intersect(polygonGeoJson, viewportPoly);
           
           if (visibleIntersection) {
             const center = turf.centerOfMass(visibleIntersection);
