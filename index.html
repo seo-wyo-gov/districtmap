@@ -706,18 +706,18 @@
       });
 
       function updateVisibleTooltips() {
-        const bbox = map.getBounds();
-        const viewportPoly = turf.bboxPolygon([
-          bbox.getWest(), bbox.getSouth(), bbox.getEast(), bbox.getNorth()
-        ]);
+        const bounds = map.getBounds();
+        const bbox = [
+          bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()
+        ];
 
-        geoJsonLayer.eachLayer(layer => {
+        geoJsonLayer.eachLayer(function (layer) {
           const polygonGeoJson = layer.toGeoJSON();
-          const visibleIntersection = turf.intersect(polygonGeoJson, viewportPoly);
+          const clipped = turf.bboxClip(polygonGeoJson, bbox);
           
-          if (visibleIntersection) {
-            const center = turf.centerOfMass(visibleIntersection);
-            const latLng = L.latLng(center.geometry.coordinates[1], center.geometry.coordinates[0]);
+          if (clipped && clipped.geometry && clipped.geometry.coordinates.length > 0) {
+            const center = turf.centerOfMass(clipped);
+            const latLng = [center.geometry.coordinates[1], center.geometry.coordinates[0]];
             layer.getTooltip().setLatLng(latLng);
           }
         });
