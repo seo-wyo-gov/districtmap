@@ -568,7 +568,7 @@
           const tmass = turf.centerOfMass(polyGeoJson).geometry.coordinates;
           const tcentroid = turf.centroid(polyGeoJson).geometry.coordinates;
           const coords = feature.geometry.coordinates;
-          const poleOfInaccessibility = polylabel(coords, 0.000001);
+          //const poleOfInaccessibility = polylabel(coords, 0.000001);
           //console.log('Center coordinates for ' + feature.properties['DIVISION'] + ' - ' + feature.properties['DISTRICT'] + ': ' + center);
           //console.log('Turf coordinates: ' + tcenter);
           //console.log('Turf center of mass: ' + tmass);
@@ -717,7 +717,8 @@
           
           if (clipped && clipped.geometry && clipped.geometry.coordinates.length > 0) {
             const center = turf.centerOfMass(clipped);
-            const latLng = [center.geometry.coordinates[1], center.geometry.coordinates[0]];
+            const poleOfInaccessibility = polylabel(clipped, 0.000001);
+            const latLng = [poleOfInaccessibility.geometry.coordinates[1], poleOfInaccessibility.geometry.coordinates[0]];
             layer.getTooltip().setLatLng(latLng);
           }
         });
