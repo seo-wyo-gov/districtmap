@@ -717,8 +717,9 @@
           
           if (clipped && clipped.geometry && clipped.geometry.coordinates.length > 0) {
             const center = turf.centerOfMass(clipped);
-            const poleOfInaccessibility = polylabel(clipped, 0.000001);
-            const latLng = [poleOfInaccessibility.geometry.coordinates[1], poleOfInaccessibility.geometry.coordinates[0]];
+            const coord = clipped.geometry.coordinates
+            const pole = polylabel(coord, 0.000001);
+            const latLng = [pole[1], pole[0]];
             layer.getTooltip().setLatLng(latLng);
           }
         });
