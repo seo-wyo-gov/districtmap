@@ -711,7 +711,7 @@
           bbox.getWest(), bbox.getSouth(), bbox.getEast(), bbox.getNorth()
         ]);
 
-        geoJsonLayer.eachLayer((layer) => {
+        geoJsonLayer.forEach(layer => {
           const polygonGeoJson = layer.toGeoJSON();
           const visibleIntersection = turf.intersect(polygonGeoJson, viewportPoly);
           
