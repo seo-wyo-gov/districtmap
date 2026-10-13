@@ -402,52 +402,17 @@
         $('#info-type').html('');
       });
         
-      //let districtdata = [];
-      //let officedata = [];
       getData();
       async function getData() {
-        //const key = process.env.GOOGLE_API_KEY;
-        //const id = process.env.SHEET_ID;
-        //const range = ["Contacts", "Offices"];
-
-        //const ranges = range.map((e) => "ranges=" + e).join("&");
-        //const response = await fetch("https://sheets.googleapis.com/v4/spreadsheets/" + id + "/values:batchGet?key=" + key + "&" + ranges);
-        //const { valueRanges } = await response.json();
-        //const obj = valueRanges.reduce((o, { values }, i) => (o[range[i]] = values, o), {});
-        //console.log(obj);
-
-        //const array = obj.Contacts;
-        //const headers = array[0];
-        //const ob = array.slice(1).map(values => {
-          //console.log(values);
-          //return headers.reduce((o, header, index) => {
-            //console.log(values[index]);
-              //o[header.trim()] = values[index] ? values[index].trim() : '';
-              //console.log(o);
-              //return o;
-          //}, {});
-        //});
-        //console.log(ob);
         const response = await fetch("https://script.google.com/macros/s/AKfycby9WUOHJiKcYuOzc8fCuNie6AMDLpYzmQOitCbRBflnZQnqCaS8xyP6dmGnvCHG-q8/exec");
         const data = await response.json();
         console.log(response);
         const districtdata = data.Contacts;
-
-        //let array1 = obj.Div1Offices;
-        //let keys1 = array1.shift();
-        //let ob1 = array1.map((values) => {
-          //return keys1.reduce(function(o, k, i) {
-            //o[k] = values[i];
-            //return o;
-          //}, {});
-        //});
         const officedata = data.Offices;
         console.log(districtdata);
         console.log(officedata);
         geodata.features.forEach((item) => {
-          //console.log("Div: " + item.properties.DIVISION + " Dist: " + item.properties['DISTRICT']);
           const filtereddata = districtdata.filter(data => data['Division'].toString() === item.properties['DIVISION'] && (data['District'].split(" , ").indexOf(item.properties['DISTRICT']) > -1 || data['District Assistant'].split(" , ").indexOf(item.properties['DISTRICT']) > -1)).sort((a, b) => !b['District Assistant'] - !a['District Assistant']);
-          //console.log(filtereddata);
           if(filtereddata) {
             item.properties['INFO'] = JSON.stringify(filtereddata);
           }
@@ -560,26 +525,12 @@
             direction: 'center',
             className: 'polygon-label'
           });
-          //console.log(layer.getTooltip());
-          //const b = map.getBounds();
           const polyGeoJson = layer.toGeoJSON();
           const center = layer.getBounds().getCenter();
           const tcenter = turf.pointOnFeature(polyGeoJson).geometry.coordinates;
           const tmass = turf.centerOfMass(polyGeoJson).geometry.coordinates;
           const tcentroid = turf.centroid(polyGeoJson).geometry.coordinates;
           const coords = feature.geometry.coordinates;
-          //const poleOfInaccessibility = polylabel(coords, 0.000001);
-          //console.log('Center coordinates for ' + feature.properties['DIVISION'] + ' - ' + feature.properties['DISTRICT'] + ': ' + center);
-          //console.log('Turf coordinates: ' + tcenter);
-          //console.log('Turf center of mass: ' + tmass);
-          //const tooltip = L.tooltip({permanent: true, className: 'polygon-label'}).setLatLng([tcentroid[1], tcentroid[0]]).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
-          //const stickytooltip = L.tooltip({permanent: false, direction: 'auto', sticky: true, className: 'polygon-label'}).setLatLng([poleOfInaccessibility[1], poleOfInaccessibility[0]]).setContent("<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>").addTo(map);
-          //const labelMarker = L.marker(center, {
-            //icon: L.divIcon({
-              //className: 'polygon-label',
-              //html: "<div style='font-size: 12px;'><b>" + feature.properties["DIVISION"] + "</b></div><div style='font-size: 10px;'>" + feature.properties["DISTRICT"] + "</div>"
-            //})
-          //}).addTo(map);
           layer.on({
             click: function(e) {
               // 1. Prevent map click events from triggering
@@ -588,7 +539,6 @@
               // 2. Extract properties from the clicked GeoJSON feature
               const props = feature.properties;
 
-              //console.log(props.INFO);
               $('#main-title').html('Division ' + props.DIVISION);
               $('#secondary-title').html('District ' + props.DISTRICT);
               $('#info-type').html('Contacts');
@@ -612,9 +562,6 @@
                 }
                 $('#district-content').append(newDiv);
               });
-
-              // 4. Update sidebar DOM and reveal it
-              //sidebarContent.innerHTML = htmlContent;
                         
               sidebar.classList.add('open');
 
